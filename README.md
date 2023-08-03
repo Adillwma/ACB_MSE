@@ -1,8 +1,8 @@
 # ACB-MSE
-Automatic-Class-Balanced MSE Loss Method for PyTorch (ACB-MSE) to combat class imbalanced datasets. 
+Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class imbalanced datasets. 
 
-[![Build Status](https://img.shields.io/travis/username/repo.svg)](https://travis-ci.org/username/repo)
-[![Code Coverage](https://img.shields.io/codecov/c/github/username/repo.svg)](https://codecov.io/gh/username/repo)
+[![Build Status](https://img.shields.io/travis/username/repo.svg)](https://travis-ci.org/Adillwma/ACB-MSE)
+[![Code Coverage](https://img.shields.io/codecov/c/github/username/repo.svg)](https://codecov.io/gh/Adillwma/ACB-MSE)
 [![Language](https://img.shields.io/badge/language-Python-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
@@ -18,7 +18,6 @@ Automatic-Class-Balanced MSE Loss Method for PyTorch (ACB-MSE) to combat class i
 - [References](#references)
 
 
-
 ## Introduction 
 During development when tested with popular loss functions such as MSE and MAE the autoencoder was able to recover the signal, if the data contained many images of only the one signal pattern, which as mentioned results in a very poorly generalisable model is not usefull, but did indicate to us that the network is capable of encoding the pattern. However once shifting and scaling of the cross pattern were introduced it was unable to learn it and began returning blank images. After some research and investigation the problem was found to be an effect known as class imbalance which is an issue that can arise where the interesting features are contained in the minority class. The input image contains 11,264 total pixels and around 230 of them are hits (signal and noise) leaving 98.2\% of pixels as non-hits. For the network, just guessing that all the pixels are non-hits yields a 98.2\% reconstruction loss and it can easily get stuck in this local minima.
 
@@ -26,6 +25,8 @@ Class imbalance most commonly appears in classification tasks such as recognisin
 
 
 ## Installation
+
+
 
 
 ## Usage
@@ -69,9 +70,6 @@ For any inquiries, feel free to reach out to me at adillwmaa@gmail.com.
 
 
 ## References:
-[ACB-MSE](my paper)
-
-[Automatic-Class-Balanced Loss Based on Effective Number of Samples](https://arxiv.org/abs/1901.05555)
 
 [Class Imbalence](\cite{chawla2002smote})
 
@@ -80,3 +78,120 @@ For any inquiries, feel free to reach out to me at adillwmaa@gmail.com.
 [Lovász-Softmax](\cite{berman2018lovasz})
 
 [Class Balanced Loss](\cite{cui2019class})
+
+[Automatic-Class-Balanced Loss Based on Effective Number of Samples](https://arxiv.org/abs/1901.05555)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ACBMSE - Adaptive Class-Weighted Mean Squared Error Loss
+
+This repository contains a PyTorch implementation of the ACBMSE loss function, which stands for Adaptive Class-Weighted Mean Squared Error Loss. This loss function is designed to handle cases where the target image has regions with zero and non-zero pixel values differently. It calculates the weighted mean squared error between a target image and a reconstructed image, where the loss for zero pixels in the target image is weighted by `zero_weighting`, and the loss for non-zero pixels is weighted by `nonzero_weighting`.
+
+## Usage
+
+### Requirements
+- Python 3.x
+- PyTorch (tested with version X.X.X)
+
+### Installation
+1. Clone the repository to your local machine:
+
+```bash
+git clone https://github.com/username/repository.git
+```
+
+2. Change your current working directory to the project's root directory:
+
+```bash
+cd repository
+```
+
+### Example
+
+```python
+import torch
+from acbmse import ACBMSE
+
+# Create an instance of the ACBMSE loss function with specified weighting coefficients
+loss_function = ACBMSE(zero_weighting=2, nonzero_weighting=1)
+
+# Dummy target image and reconstructed image tensors (assuming B=1, C=3, H=256, W=256)
+target_image = torch.rand(1, 3, 256, 256)
+reconstructed_image = torch.rand(1, 3, 256, 256)
+
+# Calculate the ACBMSE loss
+weighted_mse_loss = loss_function(reconstructed_image, target_image)
+print("Weighted MSE Loss:", weighted_mse_loss.item())
+```
+
+## ACBMSE Class
+
+### `ACBMSE(zero_weighting=1, nonzero_weighting=1)`
+The `ACBMSE` class represents the Adaptive Class-Weighted Mean Squared Error loss function.
+
+#### Parameters
+- `zero_weighting` (float, optional): A scalar weighting coefficient for the MSE loss of zero pixels in the target image. Default is 1.
+- `nonzero_weighting` (float, optional): A scalar weighting coefficient for the MSE loss of non-zero pixels in the target image. Default is 1.
+
+### `__call__(reconstructed_image, target_image)`
+This method calculates the weighted mean squared error loss between the target image and the reconstructed image.
+
+#### Parameters
+- `reconstructed_image` (torch.Tensor): A tensor of shape `(B, C, H, W)` containing the reconstructed image.
+- `target_image` (torch.Tensor): A tensor of shape `(B, C, H, W)` containing the target image.
+
+#### Returns
+- `weighted_mse_loss` (torch.Tensor): A scalar tensor containing the weighted MSE loss.
+
+## How ACBMSE Works
+
+1. The method `__call__` takes the target image and the reconstructed image as input tensors.
+2. It creates two masks from the target image:
+   - `zero_mask`: A boolean mask where elements are `True` for zero-valued pixels in the target image.
+   - `nonzero_mask`: A boolean mask where elements are `True` for non-zero-valued pixels in the target image.
+3. Extracts the pixel values from both the target image and the reconstructed image corresponding to zero and non-zero masks.
+4. Calculates the mean squared error loss for the pixel values associated with each mask.
+5. Multiplies the losses with the corresponding weighting coefficients (`zero_weighting` and `nonzero_weighting`).
+6. Returns the weighted MSE loss as the final loss value.
+
+Please note that any NaN loss values resulting from the calculation are handled by setting them to zero.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Contributions
+
+Contributions to this project are welcome. Please feel free to open issues or submit pull requests to help improve the functionality and usability of the ACBMSE loss function.
