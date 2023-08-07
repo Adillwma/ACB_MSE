@@ -19,7 +19,7 @@ Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class
 - [References](#references)
 
 ## Introduction 
-This repository contains the PyTorch implementation of the ACB-MSE loss function, which stands for Automatic Class Balanced Mean Squared Error, originally developed for the [DEEPCLEAN3D Denoiser](#https://github.com/Adillwma/DeepClean-Noise-Suppression-for-LHC-B-Torch-Detector")
+This repository contains the PyTorch implementation of the ACB-MSE loss function, which stands for Automatic Class Balanced Mean Squared Error, originally developed for the [DEEPCLEAN3D Denoiser](https://github.com/Adillwma/DeepClean-Noise-Suppression-for-LHC-B-Torch-Detector)
 
 ## Benefits
 The ACB-MSE loss function was designed for data taken from particle detectors which often have a majority of 'pixels' which are unlit and a very sparse pattern of lit pixels. In this scenario the ACB-MSE loss provides two main benefits, addressing the class imbalance beteen lit and unlit pixels whilst also stabilising the loss gradient during training. Additonal parameters, 'A' and 'B', are provided to allow the user to set a custom balance between classes.
