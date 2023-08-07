@@ -108,13 +108,9 @@ Please note that any NaN loss values resulting from the calculation are handled 
 
 The function relies on the knowledge of the indices for all hits and non-hits in the true label image, which are then compared to the values in the corresponding index's in the recovered image. The loss function is given by:
 
-$$ \text{Loss} = A(\frac{1}{N_h}\sum_{i=1}^{N_h}(y_i - \hat{y}_i)^2) + B(\frac{1}{N_n}\sum_{i=1}^{N_n}(y_i - \hat{y}_i)^2)$$
+$$ A(\frac{1}{N_h}\sum_{i=1}^{N_h}(y_i - \hat{y}_i)^2) + B(\frac{1}{N_n}\sum_{i=1}^{N_n}(y_i - \hat{y}_i)^2)$$
 
-$$ \text{Loss} = (\frac{1}{N_h}\sum_{i=1}^{N_h}(y_i - \hat{y}_i)^2) + (\frac{1}{N_n}\sum_{i=1}^{N_n}(y_i - \hat{y}_i)^2)$$
 
-$$ \text{Loss} = A(\frac{1}{N_h}\sum_{i=1}^{N_h}(y_i - \hat{y}_i)^2) - B(\frac{1}{N_n}\sum_{i=1}^{N_n}(y_i - \hat{y}_i)^2)$$
-
-$$ \text{Loss} = A(\frac{1}{N_h}\sum_{i=1}^{N_h}(y_i - \hat{y}_i)^2) B(\frac{1}{N_n}\sum_{i=1}^{N_n}(y_i - \hat{y}_i)^2)$$
 
 where $y_i$ is the true value of the $i$-th pixel in the class, $\hat{y}_i$ is the predicted value of the $i$-th pixel in the class, and $n$ is the total number of pixels in the class (in our case labeled as $N_h$ and $N_n$ corresponding to 'hits' and 'no hits' classes, but can be extended to n classes). This approach to the loss function calculation takes the mean square of each class separately, when summing the separate classes errors back together they are automatically scaled by the inverse of the class frequency, normalising the class balance to 1:1. The additional coefficients $A$ and $B$ allow the user to manually adjust the balance to fine tune the balance.
 
