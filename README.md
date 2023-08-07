@@ -27,7 +27,8 @@ The ACB-MSE loss function was designed for data taken from particle detectors wh
 #### Variable Class Size - Training Stability
 If the number of hit pixels varies dramatically between images during training it can cause the loss value to fluctuate. This The ACBMSE loss function solves this problem by automatically adjusting the weighting of the loss function to account for the number of hit pixels in the target image. 
 
-![Example Image](Images/loss_curve_1.png "Alternative Text")
+<img src="Images/loss_curve_1.png" alt="Alternative Text" width="500">
+
 
 Figure that demonstrates how each of the loss functions (ACB-MSE, MSE and MAE) behave based on the number of hits in the true signal. Two dummy images were created, the first image contains some ToF values of 100 the second image is a replica of the first but only containing the Tof values in half of the number of pixels of the first image, this simulates a 50% signal recovery. to generate the plot the first image was filled in two pixel increments with the second image following at a constant 50% recovery, and at each iteration the loss functions are calculated for the pair of images. We can see how the MSE and MAE functions loss varies as the size of the signal is increased. Whereas the ACB-MSE loss stays constant regardless of the frequency of the signal class.
 
@@ -36,8 +37,9 @@ The Loss functions response curve is demonstrated in fig \ref{fig:losscurves}. T
 
 #### Class Imbalance - Local Minima
 Class imbalance is an issue that can arise where the interesting features are contained in the minority class. In the case of the DEEPCLEAN3D data the input images contained 11,264 total pixels, with only around 200 of them being hits. For the network, just guessing that all the pixels are non-hits (zero valued) yields a very respectable 90+% reconstruction loss. During training, this local minima proved hard for the network to escape from. Class balancing based on class frequency is a simple solution to this problem which shifts the loss landscape as shown in the plot below. ??Moving to ACB-MSE for the scenrio outlined above means that guessing all the pixels are non hits results in a loss of 50% rather than 98.2%, and to improve on this the network must begin to fill in signal pixels.??
+ 
+<img src="Images/loss_curve_2.png" alt="Alternative Text" width="500">
 
-![Example Image](Images/loss_curve_2.png "Alternative Text")
 
 Explain image 2
 
@@ -103,9 +105,6 @@ print("ACB-MSE Loss:", loss.item())
 Please note that any NaN loss values resulting from the calculation are handled by setting them to zero.
 
 The function relies on the knowledge of the indices for all hits and non-hits in the true label image, which are then compared to the values in the corresponding index's in the recovered image. The loss function is given by:
-
-$$ \text{Loss} = A(\frac{1}{N_h}\sum_{i=1}^{N_h}(y_i-\hat{y}_i)^2) + B(\frac{1}{N_n}\sum_{i=1}^{N_n}(y_i-\hat{y}_i)^2)$$
-
 
 $$ \text{Loss} = A(\frac{1}{N _ h}\sum _ {i = 1} ^ {N _ h}(y _ i - \hat{y} _ i) ^ 2) + B(\frac{1}{N _ n}\sum _ {i = 1} ^ {N _ n}(y _ i - \hat{y} _ i) ^ 2) $$
 
