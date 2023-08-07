@@ -21,10 +21,6 @@ Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class
 ## Introduction 
 This repository contains the PyTorch implementation of the ACB-MSE loss function, which stands for Automatic Class Balanced Mean Squared Error, originally developed for the [DEEPCLEAN3D Denoiser](#https://github.com/Adillwma/DeepClean-Noise-Suppression-for-LHC-B-Torch-Detector")
 
-
-
-
-
 ## Benefits
 The ACB-MSE loss function was designed for data taken from particle detectors which often have a majority of 'pixels' which are unlit and a very sparse pattern of lit pixels. In this scenario the ACB-MSE loss provides two main benefits, addressing the class imbalance beteen lit and unlit pixels whilst also stabilising the loss gradient during training. Additonal parameters, 'A' and 'B', are provided to allow the user to set a custom balance between classes.
 
@@ -110,6 +106,8 @@ The function relies on the knowledge of the indices for all hits and non-hits in
 
 $$ \text{Loss} = A(\frac{1}{N_h}\sum_{i=1}^{N_h}(y_i-\hat{y}_i)^2) + B(\frac{1}{N_n}\sum_{i=1}^{N_n}(y_i-\hat{y}_i)^2)$$
 
+
+$$ \text{Loss} = A(\frac{1}{N _ h}\sum _ {i = 1} ^ {N _ h}(y _ i - \hat{y} _ i) ^ 2) + B(\frac{1}{N _ n}\sum _ {i = 1} ^ {N _ n}(y _ i - \hat{y} _ i) ^ 2) $$
 
 
 where $y_i$ is the true value of the $i$-th pixel in the class, $\hat{y}_i$ is the predicted value of the $i$-th pixel in the class, and $n$ is the total number of pixels in the class (in our case labeled as $N_h$ and $N_n$ corresponding to 'hits' and 'no hits' classes, but can be extended to n classes). This approach to the loss function calculation takes the mean square of each class separately, when summing the separate classes errors back together they are automatically scaled by the inverse of the class frequency, normalising the class balance to 1:1. The additional coefficients $A$ and $B$ allow the user to manually adjust the balance to fine tune the balance.
