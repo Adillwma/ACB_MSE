@@ -6,10 +6,10 @@ Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class
 
 ## Table of Contents
 - [Introduction](#introduction)
-- [Benefits](#benefits)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Methodology](#methodology)
+- [Benefits](#benefits)
 - [License](#license)
 - [Contributions](#contributions)
 - [Contact](#contact)
