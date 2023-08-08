@@ -1,5 +1,5 @@
 # ACB-MSE
-Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class imbalanced datasets. 
+Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class imbalanced datasets.
 
 [![Language](https://img.shields.io/badge/language-Python-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
@@ -17,18 +17,6 @@ Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class
 ## Introduction 
 This repository contains the PyTorch implementation of the ACB-MSE loss function, which stands for Automatic Class Balanced Mean Squared Error, originally developed for the [DEEPCLEAN3D Denoiser](https://github.com/Adillwma/DeepClean-Noise-Suppression-for-LHC-B-Torch-Detector) to combat class imbalance and stabilise loss gradient fluctuation due to dramatically varying class frequencies. 
 
-## Benefits
-The ACB-MSE loss function was designed for data taken from particle detectors which often have a majority of 'pixels' which are unlit and a very sparse pattern of lit pixels. In this scenario the ACB-MSE loss provides two main benefits, addressing the class imbalance beteen lit and unlit pixels whilst also stabilising the loss gradient during training. Additonal parameters, 'A' and 'B', are provided to allow the user to set a custom balance between classes.
-
-#### Variable Class Size - Training Stability
-Fluctuations in the number of hit pixels across images during training can disrupt loss stability. ACB-MSE remedies this by dynamically adjusting loss function weights to reflect class frequencies in the target.
-
-<img src="Images/loss_curve_1.png" alt="Alternative Text" width="500">
-
-The above plot demonstrates how each of the loss functions (ACB-MSE, MSE and MAE) behave based on the number of hits in the true signal. Two dummy images were created, the first image contains a simulated signal and the recovered image is created with 50% of that signal correctly identified, simulating a 50% signal recovery by the network. To generate the plot the first image was filled in two pixel increments with the second image following at a constant 50% recovery, and at each iteration the loss is calculated for the pair of images. We can see how the MSE and MAE functions loss varies as the size of the signal is increased with the recovery percentage fixed at 50%, whereas the ACB-MSE loss stays constant regardless of the frequency of the signal class.
-
-#### Class Imbalance - Local Minima
-Class imbalance is an issue that can arise where the interesting features are contained in the minority class. In the case of the [DEEPCLEAN3D](https://github.com/Adillwma/DeepClean-Noise-Suppression-for-LHC-B-Torch-Detector) data, the input images contained 11,264 total pixels with only around 200 of them being hits. For the network, guessing that all the pixels are non-hits (zero valued) yields a very respectable reconstruction loss and is a simple transfer function for the network to learn, this local minima proved hard for the network to escape from. Class balancing based on class frequency is a simple solution to this problem that shifts the loss landscape, making it less favorable for the network to guess all pixels as non-hits. This enabled the [DEEPCLEAN3D](https://github.com/Adillwma/DeepClean-Noise-Suppression-for-LHC-B-Torch-Detector) network to escape the local minima and begin to learn a usefull transfer function for the input fetures.
 
 ## Installation
 Available on PyPi
@@ -77,7 +65,6 @@ loss = loss_function(reconstructed_image, target_image)
 print("ACB-MSE Loss:", loss)
 ```
 
-
 ## Methodology and Equations
 1.  Two masks are created from the target (label) image:
    - `zero_mask`: A boolean mask where elements are `True` for zero-valued pixels in the target image.
@@ -93,7 +80,18 @@ $$ \text{Loss} = A(\frac{1}{N _ h}\sum _ {i = 1} ^ {N _ h}(y _ i - \hat{y} _ i) 
 
 where $y_i$ is the true value of the $i$-th pixel in the class, $\hat{y}_i$ is the predicted value of the $i$-th pixel in the class, and $n$ is the total number of pixels in the class (in our case labeled as $N_h$ and $N_n$ corresponding to 'hits' and 'no hits' classes, but can be extended to n classes). This approach to the loss function calculation takes the mean square of each class separately, when summing the separate classes errors back together they are automatically scaled by the inverse of the class frequency, normalising the class balance to 1:1. The additional coefficients $A$ and $B$ allow the user to manually adjust the balance to fine tune the balance.
 
+## Benefits
+The ACB-MSE loss function was designed for data taken from particle detectors which often have a majority of 'pixels' which are unlit and a very sparse pattern of lit pixels. In this scenario the ACB-MSE loss provides two main benefits, addressing the class imbalance beteen lit and unlit pixels whilst also stabilising the loss gradient during training. Additonal parameters, 'A' and 'B', are provided to allow the user to set a custom balance between classes.
 
+#### Variable Class Size - Training Stability
+Fluctuations in the number of hit pixels across images during training can disrupt loss stability. ACB-MSE remedies this by dynamically adjusting loss function weights to reflect class frequencies in the target.
+
+<img src="Images/loss_curve_1.png" alt="Alternative Text" width="500">
+
+The above plot demonstrates how each of the loss functions (ACB-MSE, MSE and MAE) behave based on the number of hits in the true signal. Two dummy images were created, the first image contains a simulated signal and the recovered image is created with 50% of that signal correctly identified, simulating a 50% signal recovery by the network. To generate the plot the first image was filled in two pixel increments with the second image following at a constant 50% recovery, and at each iteration the loss is calculated for the pair of images. We can see how the MSE and MAE functions loss varies as the size of the signal is increased with the recovery percentage fixed at 50%, whereas the ACB-MSE loss stays constant regardless of the frequency of the signal class.
+
+#### Class Imbalance - Local Minima
+Class imbalance is an issue that can arise where the interesting features are contained in the minority class. In the case of the [DEEPCLEAN3D](https://github.com/Adillwma/DeepClean-Noise-Suppression-for-LHC-B-Torch-Detector) data, the input images contained 11,264 total pixels with only around 200 of them being hits. For the network, guessing that all the pixels are non-hits (zero valued) yields a very respectable reconstruction loss and is a simple transfer function for the network to learn, this local minima proved hard for the network to escape from. Class balancing based on class frequency is a simple solution to this problem that shifts the loss landscape, making it less favorable for the network to guess all pixels as non-hits. This enabled the [DEEPCLEAN3D](https://github.com/Adillwma/DeepClean-Noise-Suppression-for-LHC-B-Torch-Detector) network to escape the local minima and begin to learn a usefull transfer function for the input fetures.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
