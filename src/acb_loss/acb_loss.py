@@ -1,6 +1,6 @@
 import torch
 
-class ACBMSE(torch.nn.Module):
+class acb_mse(torch.nn.Module):
     def __init__(self, zero_weighting=1, nonzero_weighting=1):
         """
         Initializes the ACB-MSE Loss Function class with weighting coefficients.

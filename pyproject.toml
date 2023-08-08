@@ -4,12 +4,12 @@ build-backend = "hatchling.build"
 
 
 [project]
-name = "ACB-MSE"
+name = "acbloss"
 version = "1.0.0"
 authors = [
   { name="Adill Al-Ashgar", email="adillwmaa@gmail.com" },
 ]
-description = "Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class imbalanced datasets."
+description = "Automatic-Class-Balanced MSE Loss for PyTorch (ACB-MSE) to combat class imbalanced datasets and stabilise fluctuating loss gradients."
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
