@@ -8,15 +8,13 @@ Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Benefits](#benefits)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Examples](#examples)
-- [Demonstration](#demonstration)
-- [Documentation](#documentation)
+- [Methodology](#methodology)
 - [License](#license)
 - [Contributions](#contributions)
 - [Contact](#contact)
-- [References](#references)
 
 ## Introduction 
 This repository contains the PyTorch implementation of the ACB-MSE loss function, which stands for Automatic Class Balanced Mean Squared Error, originally developed for the [DEEPCLEAN3D Denoiser](https://github.com/Adillwma/DeepClean-Noise-Suppression-for-LHC-B-Torch-Detector)
@@ -30,19 +28,10 @@ If the number of hit pixels varies dramatically between images during training i
 <img src="Images/loss_curve_1.png" alt="Alternative Text" width="500">
 
 
-Figure that demonstrates how each of the loss functions (ACB-MSE, MSE and MAE) behave based on the number of hits in the true signal. Two dummy images were created, the first image contains some ToF values of 100 the second image is a replica of the first but only containing the Tof values in half of the number of pixels of the first image, this simulates a 50% signal recovery. to generate the plot the first image was filled in two pixel increments with the second image following at a constant 50% recovery, and at each iteration the loss functions are calculated for the pair of images. We can see how the MSE and MAE functions loss varies as the size of the signal is increased. Whereas the ACB-MSE loss stays constant regardless of the frequency of the signal class.
-
-The Loss functions response curve is demonstrated in fig \ref{fig:losscurves}. This show how the the ACB-MSE compares to vanilla MSE and also MAE. The addition of ACB balancing means that the separate classes (non hits and hits) are exactly balanced regardless of how large a proportion of the population they are in each input array. 
-
+The above plot demonstrates how each of the loss functions (ACB-MSE, MSE and MAE) behave based on the number of hits in the true signal. Two dummy images were created, the first image contains a simulated signal and the recovered image is created with 50% of that signal correctly identified, simulating a 50% signal recovery by the network. To generate the plot the first image was filled in two pixel increments with the second image following at a constant 50% recovery, and at each iteration the loss value is calculated for the pair of images. We can see how the MSE and MAE functions loss varies as the size of the signal is increased but the recovery percentage is held fixed at 50%, whereas the ACB-MSE loss stays constant regardless of the frequency of the signal class.
 
 #### Class Imbalance - Local Minima
-Class imbalance is an issue that can arise where the interesting features are contained in the minority class. In the case of the DEEPCLEAN3D data the input images contained 11,264 total pixels, with only around 200 of them being hits. For the network, just guessing that all the pixels are non-hits (zero valued) yields a very respectable 90+% reconstruction loss. During training, this local minima proved hard for the network to escape from. Class balancing based on class frequency is a simple solution to this problem which shifts the loss landscape as shown in the plot below. ??Moving to ACB-MSE for the scenrio outlined above means that guessing all the pixels are non hits results in a loss of 50% rather than 98.2%, and to improve on this the network must begin to fill in signal pixels.??
- 
-<img src="Images/loss_curve_2.png" alt="Alternative Text" width="500">
-
-
-Explain image 2
-
+Class imbalance is an issue that can arise where the interesting features are contained in the minority class. In the case of the DEEPCLEAN3D data the input images contained 11,264 total pixels, with only around 200 of them being hits. For the network, just guessing that all the pixels are non-hits (zero valued) yields a very respectable 90+% reconstruction loss. During training, this local minima proved hard for the network to escape from. Class balancing based on class frequency is a simple solution to this problem.
 
 
 
