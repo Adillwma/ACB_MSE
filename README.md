@@ -36,7 +36,7 @@ Class imbalance is an issue that can arise where the interesting features are co
 ## Installation
 Available on PyPi
 ```bash
-pip install ACB-MSE
+pip install acb_mse
 ```
 
 
@@ -62,14 +62,14 @@ pip install ACB-MSE
 ##### Example Code
 ```python
 import torch
-from acbmse import ACBMSE
+from acb_mse import ACBLoss
 
 # Select weighting for each class if not wanting to use the defualt 1:1 weighting
 zero_weighting = 1.0
 nonzero_weighting = 1.2
 
 # Create an instance of the ACBMSE loss function with specified weighting coefficients
-loss_function = ACBMSE(zero_weighting, nonzero_weighting)
+loss_function = ACBLoss(zero_weighting, nonzero_weighting)
 
 # Dummy target image and reconstructed image tensors (assuming B=10, C=3, H=256, W=256)
 target_image = torch.rand(10, 3, 256, 256)

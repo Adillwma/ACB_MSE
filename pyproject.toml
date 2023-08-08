@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "acb_mse"
-version = "1.0.0"
+version = "1.0.4"
 authors = [
   { name="Adill Al-Ashgar", email="adillwmaa@gmail.com" },
 ]
@@ -17,6 +17,12 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+
+dependencies = [
+"torch>=2.0.0"
+]
+
+
 
 [project.urls]
 "Homepage" = "https://github.com/Adillwma/ACB-MSE"
