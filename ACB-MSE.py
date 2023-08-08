@@ -46,4 +46,4 @@ class ACBMSE(torch.nn.Module):
 
         weighted_mse_loss = (self.zero_weighting * zero_loss) + (self.nonzero_weighting * nonzero_loss)
 
-        return weighted_mse_loss
+        return float(weighted_mse_loss)
