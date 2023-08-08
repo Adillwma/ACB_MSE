@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+
+[project]
+name = "ACB-MSE"
+version = "1.0.0"
+authors = [
+  { name="Adill Al-Ashgar", email="adillwmaa@gmail.com" },
+]
+description = "Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class imbalanced datasets."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Adillwma/ACB-MSE"
+"Bug Tracker" = "https://github.com/Adillwma/ACB-MSE/issues"
