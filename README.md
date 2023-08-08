@@ -52,8 +52,8 @@ pip install ACB-MSE
 - `nonzero_weighting` (float, optional): Weighting coefficient for MSE loss of non-zero pixels. Default is 1.
 
 #### Inputs
-   - Input (torch.Tensor): $(*)$, where $(*)$ means any number of dimensions.
-   - Target (torch.Tensor): $(*)$, same shape as the input.
+   - Input (torch.Tensor): $( * )$, where $( * )$ means any number of dimensions.
+   - Target (torch.Tensor): $( * )$, same shape as the input.
 
 #### Returns
 - Output (float): Calculated loss value.
