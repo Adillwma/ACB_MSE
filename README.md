@@ -23,16 +23,15 @@ This repository contains the PyTorch implementation of the ACB-MSE loss function
 The ACB-MSE loss function was designed for data taken from particle detectors which often have a majority of 'pixels' which are unlit and a very sparse pattern of lit pixels. In this scenario the ACB-MSE loss provides two main benefits, addressing the class imbalance beteen lit and unlit pixels whilst also stabilising the loss gradient during training. Additonal parameters, 'A' and 'B', are provided to allow the user to set a custom balance between classes.
 
 #### Variable Class Size - Training Stability
-If the number of hit pixels varies dramatically between images during training it can cause the loss value to fluctuate. This The ACBMSE loss function solves this problem by automatically adjusting the weighting of the loss function to account for the number of hit pixels in the target image. 
+If the number of hit pixels varies dramatically between images during training it can cause the loss value to fluctuate. The ACB-MSE loss function solves this problem by automatically adjusting the weighting of the loss function to account for the frequency of each class in the target. 
 
 <img src="Images/loss_curve_1.png" alt="Alternative Text" width="500">
 
 
-The above plot demonstrates how each of the loss functions (ACB-MSE, MSE and MAE) behave based on the number of hits in the true signal. Two dummy images were created, the first image contains a simulated signal and the recovered image is created with 50% of that signal correctly identified, simulating a 50% signal recovery by the network. To generate the plot the first image was filled in two pixel increments with the second image following at a constant 50% recovery, and at each iteration the loss value is calculated for the pair of images. We can see how the MSE and MAE functions loss varies as the size of the signal is increased but the recovery percentage is held fixed at 50%, whereas the ACB-MSE loss stays constant regardless of the frequency of the signal class.
+The above plot demonstrates how each of the loss functions (ACB-MSE, MSE and MAE) behave based on the number of hits in the true signal. Two dummy images were created, the first image contains a simulated signal and the recovered image is created with 50% of that signal correctly identified, simulating a 50% signal recovery by the network. To generate the plot the first image was filled in two pixel increments with the second image following at a constant 50% recovery, and at each iteration the loss is calculated for the pair of images. We can see how the MSE and MAE functions loss varies as the size of the signal is increased with the recovery percentage fixed at 50%, whereas the ACB-MSE loss stays constant regardless of the frequency of the signal class.
 
 #### Class Imbalance - Local Minima
-Class imbalance is an issue that can arise where the interesting features are contained in the minority class. In the case of the DEEPCLEAN3D data the input images contained 11,264 total pixels, with only around 200 of them being hits. For the network, just guessing that all the pixels are non-hits (zero valued) yields a very respectable 90+% reconstruction loss. During training, this local minima proved hard for the network to escape from. Class balancing based on class frequency is a simple solution to this problem.
-
+Class imbalance is an issue that can arise where the interesting features are contained in the minority class. In the case of the DEEPCLEAN3D data the input images contained 11,264 total pixels, with only around 200 of them being hits. For the network, guessing that all the pixels are non-hits (zero valued) yields a very respectable reconstruction loss and is a simple transfer function for the network to learn, this local minima proved hard for the network to escape from. Class balancing based on class frequency is a simple solution to this problem that allows the loss value .
 
 
 ## Installation
