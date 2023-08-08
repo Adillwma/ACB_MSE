@@ -86,7 +86,7 @@ The ACB-MSE loss function was designed for data taken from particle detectors wh
 #### Variable Class Size - Training Stability
 Fluctuations in the number of hit pixels across images during training can disrupt loss stability. ACB-MSE remedies this by dynamically adjusting loss function weights to reflect class frequencies in the target.
 
-<img src="Images/loss_curve_1.png" alt="Alternative Text" width="500">
+<img src="Images/loss_curve_1.png" alt="Alternative Text" width="400">
 
 The above plot demonstrates how each of the loss functions (ACB-MSE, MSE and MAE) behave based on the number of hits in the true signal. Two dummy images were created, the first image contains a simulated signal and the recovered image is created with 50% of that signal correctly identified, simulating a 50% signal recovery by the network. To generate the plot the first image was filled in two pixel increments with the second image following at a constant 50% recovery, and at each iteration the loss is calculated for the pair of images. We can see how the MSE and MAE functions loss varies as the size of the signal is increased with the recovery percentage fixed at 50%, whereas the ACB-MSE loss stays constant regardless of the frequency of the signal class.
 
