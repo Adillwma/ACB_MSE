@@ -47,3 +47,20 @@ class acb_mse(torch.nn.Module):
         weighted_mse_loss = (self.zero_weighting * zero_loss) + (self.nonzero_weighting * nonzero_loss)
 
         return float(weighted_mse_loss)
+
+
+
+# Select weighting for each class if not wanting to use the defualt 1:1 weighting
+zero_weighting = 1.0
+nonzero_weighting = 1.2
+
+# Create an instance of the ACBMSE loss function with specified weighting coefficients
+loss_function = acb_mse(zero_weighting, nonzero_weighting)
+
+# Dummy target image and reconstructed image tensors (assuming B=10, C=3, H=256, W=256)
+target_image = torch.rand(10, 3, 256, 256)
+reconstructed_image = torch.rand(10, 3, 256, 256)
+
+# Calculate the ACBMSE loss
+loss = loss_function(reconstructed_image, target_image)
+print("ACB-MSE Loss:", loss)
