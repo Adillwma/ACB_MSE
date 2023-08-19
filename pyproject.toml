@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "acb_mse"
-version = "1.0.4"
+version = "1.0.6"
 authors = [
   { name="Adill Al-Ashgar", email="adillwmaa@gmail.com" },
 ]
