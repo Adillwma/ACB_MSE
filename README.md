@@ -1,8 +1,15 @@
-# ACB-MSE
-Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class imbalanced datasets.
+<div align="center">
 
-[![Language](https://img.shields.io/badge/language-Python-blue.svg)](https://www.python.org/)
+
+# ACB-MSE
+### Author: Adill Al-Ashgar
+#### Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class imbalanced datasets.
+
+[![Github Repo](https://img.shields.io/badge/GitHub_Repo-ACB_MSE-yellow.svg)](https://github.com/Adillwma/ACB_MSE)
+[![Language](https://img.shields.io/badge/Language-Python-blue.svg)](https://www.python.org/) 
+[![Published](https://img.shields.io/badge/Published-2022-purple.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+</div>
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -15,7 +22,7 @@ Automatic-Class-Balanced MSE Loss function for PyTorch (ACB-MSE) to combat class
 - [Contact](#contact)
 
 ## Introduction 
-This repository contains the PyTorch implementation of the ACB-MSE loss function, which stands for Automatic Class Balanced Mean Squared Error, originally developed for the [DEEPCLEAN3D Denoiser](https://github.com/Adillwma/DeepClean-Noise-Suppression-for-LHC-B-Torch-Detector) to combat class imbalance and stabilise loss gradient fluctuation due to dramatically varying class frequencies. 
+This repository contains the PyTorch implementation of the ACB-MSE loss function, which stands for Automatic Class Balanced Mean Squared Error, originally developed for the [DEEPCLEAN3D Denoiser](https://github.com/Adillwma/DeepClean3D) to combat class imbalance and stabilise loss gradient fluctuation due to dramatically varying class frequencies. 
 
 
 ## Installation
@@ -86,7 +93,11 @@ The ACB-MSE loss function was designed for data taken from particle detectors wh
 #### Variable Class Size - Training Stability
 Fluctuations in the number of hit pixels across images during training can disrupt loss stability. ACB-MSE remedies this by dynamically adjusting loss function weights to reflect class frequencies in the target.
 
+<div align="center">
+
 <img src="Images/loss_curve_1.png" alt="Alternative Text" width="400">
+
+</div>
 
 The above plot demonstrates how each of the loss functions (ACB-MSE, MSE and MAE) behave based on the number of hits in the true signal. Two dummy images were created, the first image contains a simulated signal and the recovered image is created with 50% of that signal correctly identified, simulating a 50% signal recovery by the network. To generate the plot the first image was filled in two pixel increments with the second image following at a constant 50% recovery, and at each iteration the loss is calculated for the pair of images. We can see how the MSE and MAE functions loss varies as the size of the signal is increased with the recovery percentage fixed at 50%, whereas the ACB-MSE loss stays constant regardless of the frequency of the signal class.
 
